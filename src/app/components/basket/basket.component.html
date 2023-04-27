@@ -1,0 +1,13 @@
+<div class="header">
+  <h1>Корзина</h1>
+  <div class="mode" (click)="toShop()">в магазин</div>
+</div>
+
+<div *ngIf="!products[0]">Корзина Пуста</div>
+
+<div class="list">
+  <app-product
+    *ngFor="let p of products; let i = index"
+    [product]="p.product"
+  ></app-product>
+</div>

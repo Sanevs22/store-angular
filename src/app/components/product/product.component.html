@@ -1,0 +1,28 @@
+<div id="product-{{ 1 }}">
+  <div class="item item_back">
+    <div class="item-content">
+      <div class="name">{{ product.title }}</div>
+      <div class="product-img">
+        <img src="{{ product.image }}" alt="IMG: {{ product.title }}" />
+      </div>
+      <div class="description">{{ product.description }}</div>
+      <div class="price">Цена: {{ product.price }}</div>
+      <form [formGroup]="form">
+        <label for="positions">Кол-во:</label>
+        <input
+          name="positions"
+          placeholder="0"
+          type="text"
+          formControlName="positions"
+        />
+        <button
+          [disabled]="form.invalid || inBasket"
+          type="button"
+          (click)="submit()"
+        >
+          {{ inBasket ? "Товар в корзине" : "Купить" }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

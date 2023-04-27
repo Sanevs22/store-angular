@@ -1,0 +1,12 @@
+<div class="header">
+  <h1>My shop</h1>
+  <div class="mode" (click)="toBasket()">в корзину</div>
+</div>
+
+<div class="list">
+  <app-product
+    (addProductInBasket)="addProductInBasket($event)"
+    *ngFor="let p of products; let i = index"
+    [product]="p"
+  ></app-product>
+</div>
