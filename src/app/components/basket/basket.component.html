@@ -3,11 +3,67 @@
   <div class="mode" (click)="toShop()">в магазин</div>
 </div>
 
-<div *ngIf="!products[0]">Корзина Пуста</div>
+<div class="column">
+  <tui-island>
+    <h3 class="tui-island__title">Оформить заказ</h3>
+    <form [formGroup]="form">
+      <p>
+        <tui-input tuiTextfieldSize="m" formControlName="name">
+          Ваше имя
+          <input tuiTextfield type="text" />
+        </tui-input>
+      </p>
+      <p>
+        <tui-input tuiTextfieldSize="m" formControlName="mail">
+          Ваш email
+          <input tuiTextfield type="email" />
+        </tui-input>
+      </p>
+      <p>
+        <tui-input tuiTextfieldSize="m" formControlName="address">
+          Ваш адрес
+          <input tuiTextfield type="text" />
+        </tui-input>
+      </p>
+      <p>
+        <button
+          [disabled]="form.invalid"
+          tuiButton
+          type="button"
+          size="m"
+          acti
+          (click)="toggle(true)"
+        >
+          Сделать заказ
+        </button>
+      </p>
+    </form>
+    <hr />
+    <p>
+      <app-countries (add)="conversion($event, sum())"></app-countries>
+    </p>
+    <h3 class="tui-island__title">Сумма заказа: {{ sum() | currency }}</h3>
+    <h3 class="tui-island__title">
+      Сумма заказа:
+      {{ sum() * convertSum | currency : currencySymbol : "symbol-narrow" }}
+    </h3>
+  </tui-island>
+  <div class="basket_null" *ngIf="!products[0]">Корзина Пуста</div>
 
-<div class="list">
-  <app-product
+  <app-basket-item
     *ngFor="let p of products; let i = index"
-    [product]="p.product"
-  ></app-product>
+    [product]="p"
+    [index]="i"
+  ></app-basket-item>
 </div>
+
+<tui-push
+  class="push"
+  *tuiPush="open"
+  heading="{{ this.form.controls.name.value }}"
+  type="Заказ успешно отправлен"
+  (close)="toggle(false)"
+>
+  <h4>{{ this.form.controls.mail.value }}</h4>
+  <h4>{{ this.form.controls.address.value }}</h4>
+</tui-push>

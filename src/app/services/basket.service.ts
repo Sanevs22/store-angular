@@ -6,4 +6,8 @@ import { BasketItem } from '../interfaces/basket-item';
 })
 export class BasketService {
   basket: BasketItem[] = [];
+
+  delete(i: number): void {
+    this.basket.splice(i, 1);
+  }
 }

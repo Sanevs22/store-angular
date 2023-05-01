@@ -1,2 +1,4 @@
-<app-shop (changeMode)="changeMode()" *ngIf="isShop"></app-shop>
-<app-basket (changeMode)="changeMode()" *ngIf="!isShop"></app-basket>
+<tui-root>
+  <app-shop (changeMode)="changeMode()" *ngIf="isShop"></app-shop>
+  <app-basket (changeMode)="changeMode()" *ngIf="!isShop"></app-basket>
+</tui-root>

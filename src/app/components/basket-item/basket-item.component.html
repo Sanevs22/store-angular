@@ -1,0 +1,22 @@
+<div class="item">
+  <tui-island>
+    <h3 class="tui-island__title">{{ product.product.title }}</h3>
+    <img class="mini-img" [src]="product.product.image" alt="" />
+    <br />
+    <input [(ngModel)]="product.positions" />
+
+    <p class="tui-island__paragraph">
+      цена: {{ product.product.price | currency }}
+    </p>
+    <button
+      tuiButton
+      type="button"
+      appearance="accent"
+      size="s"
+      class="tui-island__footer-button"
+      (click)="delete()"
+    >
+      Удалить
+    </button>
+  </tui-island>
+</div>

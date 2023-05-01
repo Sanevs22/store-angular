@@ -1,0 +1,22 @@
+<form class="form" [formGroup]="form">
+  <div *tuiLet="items$ | async as items" class="tui-form__row">
+    <tui-combo-box
+      tuiTextfieldSize="s"
+      formControlName="input1"
+      [strict]="false"
+      [valueContent]="content"
+      (searchChange)="onSearchChange($event)"
+    >
+      Страна заказа
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="items"
+        [itemContent]="content"
+      ></tui-data-list-wrapper>
+    </tui-combo-box>
+  </div>
+</form>
+
+<ng-template #content let-data>
+  {{ data }}
+</ng-template>
