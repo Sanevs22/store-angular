@@ -40,12 +40,18 @@
     </form>
     <hr />
     <p>
-      <app-countries (add)="conversion($event, sum())"></app-countries>
+      <app-countries (add)="conversion($event)"></app-countries>
     </p>
     <h3 class="tui-island__title">Сумма заказа: {{ sum() | currency }}</h3>
+
     <h3 class="tui-island__title">
       Сумма заказа:
-      {{ sum() * convertSum | currency : currencySymbol : "symbol-narrow" }}
+      {{
+        louder
+          ? "загрузка"
+          : ((items$ | async) * sum()
+            | currency : currencySymbol : "symbol-narrow")
+      }}
     </h3>
   </tui-island>
   <div class="basket_null" *ngIf="!products[0]">Корзина Пуста</div>
