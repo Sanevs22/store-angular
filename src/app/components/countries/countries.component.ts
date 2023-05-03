@@ -72,6 +72,7 @@ export class CountriesComponent {
 
   ngOnDestroy(): void {
     this.destroy$.next();
+    this.destroy$.complete();
   }
 
   onSearchChange(searchQuery: string | null): void {
