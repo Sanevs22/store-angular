@@ -1,16 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {
-  Observable,
-  Subject,
-  SubscriptionLike,
-  map,
-  switchMap,
-  takeUntil,
-  tap,
-} from 'rxjs';
+import { Observable, Subject, map, switchMap, tap } from 'rxjs';
 import { BasketItem } from 'src/app/interfaces/basket-item';
-import { Currenscy } from 'src/app/interfaces/currency';
 import { BasketService } from 'src/app/services/basket.service';
 import { CurrencyService } from 'src/app/services/currency.service';
 
@@ -27,8 +18,22 @@ export class BasketComponent {
   currencySymbol = 'USD';
   convertSum = 1;
   open = false;
+  louder = false;
 
-  readonly convert$ = new Subject<void>();
+  readonly search$ = new Subject<string>();
+
+  readonly items$: Observable<any | null> = this.search$.pipe(
+    tap(() => {
+      this.louder = true;
+    }),
+    switchMap((сurrencyTo) =>
+      this.currencyService.сurrency(сurrencyTo, this.sum())
+    ),
+    map((p) => p.info.quote),
+    tap(() => {
+      this.louder = false;
+    })
+  );
 
   readonly form = new FormGroup({
     name: new FormControl(null, [Validators.required]),
@@ -56,23 +61,7 @@ export class BasketComponent {
     this.open = open;
   }
 
-  louder = false;
-  readonly search$ = new Subject<string>();
-
-  readonly items$: Observable<any | null> = this.search$.pipe(
-    tap(() => {
-      this.louder = true;
-    }),
-    switchMap((сurrencyTo) =>
-      this.currencyService.сurrency(сurrencyTo, this.sum())
-    ),
-    map((p) => p.info.quote),
-    tap(() => {
-      this.louder = false;
-    })
-  );
-
-  conversion(ev: any, sum: number) {
+  conversion(ev: any) {
     let сurrencyTo = Object.keys(ev.сountry.сountry.currencies)[0];
     this.currencySymbol = ev.сountry.сountry.currencies[сurrencyTo].symbol;
     this.search$.next(сurrencyTo);

@@ -40,7 +40,7 @@
     </form>
     <hr />
     <p>
-      <app-countries (add)="conversion($event, sum())"></app-countries>
+      <app-countries (add)="conversion($event)"></app-countries>
     </p>
     <h3 class="tui-island__title">Сумма заказа: {{ sum() | currency }}</h3>
 
